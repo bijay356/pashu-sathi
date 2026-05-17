@@ -1,24 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="ne">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>is you have heart dieseae, take this survey and get know ?</title>
+  <title>Pashu Sathi - Offline Nepali Veterinary AI</title>
   <style>
     :root {
       color-scheme: light;
-      --ink: #17202a;
-      --muted: #5d6875;
-      --line: #d9e1ea;
-      --paper: #fbfcfe;
+      --ink: #17211b;
+      --muted: #56645c;
+      --line: #d9e5dc;
+      --paper: #f6fbf7;
       --panel: #ffffff;
-      --danger: #d73545;
-      --danger-dark: #9f1e2c;
-      --gold: #d89018;
-      --green: #1d8a63;
-      --blue: #2175b8;
-      --violet: #7660b8;
-      --shadow: 0 22px 70px rgba(25, 36, 52, 0.13);
+      --green: #1f8f5f;
+      --green-dark: #116341;
+      --gold: #d48b1f;
+      --red: #c93434;
+      --blue: #256c9f;
+      --shadow: 0 18px 58px rgba(28, 63, 43, 0.14);
     }
 
     * {
@@ -29,1098 +28,507 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(circle at 12% 8%, rgba(255, 221, 180, 0.65), transparent 26rem),
-        linear-gradient(135deg, #fff8f3 0%, #eef6fa 48%, #f8fbff 100%);
+        linear-gradient(rgba(246, 251, 247, 0.86), rgba(246, 251, 247, 0.9)),
+        url("https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1800&q=80");
+      background-size: cover;
+      background-position: center;
       color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.45;
+      font-family: "Nirmala UI", "Mangal", "Segoe UI", system-ui, sans-serif;
+      line-height: 1.5;
     }
 
     main {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 30px 0 44px;
+      padding: 28px 0 36px;
     }
 
     .hero {
+      min-height: 24vh;
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-      gap: 28px;
-      align-items: center;
-      min-height: 82vh;
-    }
-
-    .hero-copy {
-      padding: 18px 0;
+      align-items: end;
+      padding: 34px 0 18px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      color: var(--danger-dark);
-      font-size: 0.83rem;
+      color: var(--green-dark);
+      font-size: 0.88rem;
       font-weight: 800;
-      letter-spacing: 0;
-      text-transform: uppercase;
     }
 
-    .pulse-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 999px;
-      background: var(--danger);
-      box-shadow: 0 0 0 8px rgba(215, 53, 69, 0.13);
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 7px rgba(31, 143, 95, 0.15);
     }
 
     h1 {
-      margin: 18px 0 16px;
-      max-width: 760px;
-      font-size: clamp(2.15rem, 6vw, 5.6rem);
-      line-height: 0.96;
+      margin: 14px 0 10px;
+      font-size: clamp(2.2rem, 7vw, 5.8rem);
+      line-height: 0.98;
       letter-spacing: 0;
-      text-transform: lowercase;
     }
 
-    .hero-copy p {
-      max-width: 650px;
+    .hero p {
+      max-width: 780px;
       margin: 0;
-      color: var(--muted);
+      color: #314138;
       font-size: 1.08rem;
+      font-weight: 650;
     }
 
-    .emergency-note {
-      margin-top: 24px;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      max-width: 660px;
-      padding: 16px 18px;
-      border: 1px solid rgba(215, 53, 69, 0.28);
-      border-left: 5px solid var(--danger);
-      background: rgba(255, 255, 255, 0.78);
-      border-radius: 8px;
-      color: #4d1820;
-      font-size: 0.96rem;
-    }
-
-    .hero-art {
-      display: flex;
-      justify-content: center;
-    }
-
-    .heart-stage {
-      position: relative;
-      width: min(100%, 450px);
-      aspect-ratio: 1 / 1.05;
+    .app {
       display: grid;
-      place-items: center;
-      filter: drop-shadow(0 28px 35px rgba(106, 38, 50, 0.23));
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 18px;
+      align-items: start;
     }
 
-    .heart-stage svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .survey-shell,
-    .results-shell {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(217, 225, 234, 0.9);
+    .assistant,
+    .side {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(217, 229, 220, 0.95);
       border-radius: 8px;
       box-shadow: var(--shadow);
       overflow: hidden;
     }
 
-    .survey-header,
-    .results-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 22px 24px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.68);
-    }
-
-    .survey-header h2,
-    .results-header h2 {
+    .toolbar,
+    .side h2 {
       margin: 0;
-      font-size: 1.22rem;
-      line-height: 1.2;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
     }
 
-    .progress {
-      width: min(280px, 42vw);
-      height: 10px;
-      background: #e9eef4;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    .progress span {
-      display: block;
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--green), var(--gold), var(--danger));
-      transition: width 220ms ease;
-    }
-
-    form {
-      padding: 24px;
-    }
-
-    .age-step {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(240px, 330px);
-      gap: 22px;
-      align-items: end;
-      margin-bottom: 22px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fbfdff;
-    }
-
-    label {
-      display: block;
-      font-weight: 800;
-    }
-
-    .field-note {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.93rem;
-      font-weight: 500;
-    }
-
-    input[type="number"] {
-      width: 100%;
-      height: 52px;
-      padding: 0 14px;
-      border: 1px solid #bbc8d6;
-      border-radius: 8px;
-      background: #fff;
-      color: var(--ink);
-      font: inherit;
-      font-size: 1.08rem;
-      font-weight: 800;
-    }
-
-    input[type="number"]:focus,
-    button:focus-visible,
-    .option input:focus-visible + span {
-      outline: 3px solid rgba(33, 117, 184, 0.28);
-      outline-offset: 2px;
-    }
-
-    .questions {
-      display: grid;
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
       gap: 14px;
+      align-items: center;
     }
 
-    .question {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 18px;
+    .toolbar h2 {
+      margin: 0;
+      font-size: 1.2rem;
     }
 
-    .question legend {
-      padding: 0;
-      color: var(--ink);
-      font-size: 1rem;
-      font-weight: 850;
-    }
-
-    .question .hint {
-      margin: 7px 0 14px;
-      color: var(--muted);
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green-dark);
+      font-weight: 800;
       font-size: 0.92rem;
     }
 
-    .options {
+    .status span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .chat {
+      min-height: 360px;
+      max-height: 54vh;
+      overflow: auto;
+      padding: 20px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .option {
-      min-width: 0;
-    }
-
-    .option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .option span {
-      display: flex;
-      min-height: 54px;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 10px 12px;
-      border: 1px solid #c9d4df;
-      border-radius: 8px;
-      background: #f7f9fb;
-      color: #293544;
-      font-size: 0.94rem;
-      font-weight: 760;
-      cursor: pointer;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-    }
-
-    .option input:checked + span {
-      border-color: var(--blue);
-      background: #e8f3fc;
-      color: #134c7c;
-      transform: translateY(-1px);
-    }
-
-    .form-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
       gap: 14px;
-      margin-top: 24px;
+      background: linear-gradient(180deg, #fbfefd 0%, #f4faf5 100%);
+    }
+
+    .message {
+      max-width: 86%;
+      padding: 14px 16px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .message.user {
+      justify-self: end;
+      background: #dff2e8;
+      border: 1px solid #b7dfca;
+    }
+
+    .message.bot {
+      justify-self: start;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .composer {
+      padding: 18px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+      display: grid;
+      gap: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 104px;
+      resize: vertical;
+      border: 1px solid #b8c9bd;
+      border-radius: 8px;
+      padding: 13px 14px;
+      font: inherit;
+      font-size: 1.03rem;
+      color: var(--ink);
+      background: #fbfffd;
+    }
+
+    textarea:focus,
+    button:focus-visible {
+      outline: 3px solid rgba(37, 108, 159, 0.25);
+      outline-offset: 2px;
     }
 
     .button-row {
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
     }
 
     button {
       min-height: 46px;
       border: 0;
       border-radius: 8px;
-      padding: 0 18px;
+      padding: 0 16px;
+      background: var(--green);
       color: #fff;
-      background: var(--danger);
       font: inherit;
       font-weight: 850;
       cursor: pointer;
     }
 
+    button:hover {
+      background: var(--green-dark);
+    }
+
     button.secondary {
-      color: var(--ink);
-      background: #e8eef4;
+      background: #eaf3ee;
+      color: var(--green-dark);
+      border: 1px solid #c8dbcf;
     }
 
-    .validation {
-      min-height: 24px;
-      color: var(--danger-dark);
-      font-weight: 760;
+    button.secondary:hover {
+      background: #dcebe2;
     }
 
-    .hidden {
-      display: none !important;
+    button.warn {
+      background: #fff6df;
+      color: #80520d;
+      border: 1px solid #edd18b;
     }
 
-    .results-body {
-      padding: 24px;
+    button[disabled] {
+      opacity: 0.62;
+      cursor: not-allowed;
     }
 
-    .result-grid {
+    .hint {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .side {
       display: grid;
-      grid-template-columns: minmax(0, 0.92fr) minmax(330px, 1.08fr);
-      gap: 22px;
-      align-items: start;
+      gap: 0;
     }
 
-    .score-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 20px;
+    .side h2 {
+      font-size: 1.08rem;
     }
 
-    .score-number {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-top: 8px;
-      color: var(--danger);
-      font-size: 4.2rem;
-      line-height: 1;
-      font-weight: 900;
-    }
-
-    .score-number span {
-      color: var(--muted);
-      font-size: 1.1rem;
-      font-weight: 800;
-    }
-
-    .risk-level {
-      display: inline-flex;
-      margin-top: 14px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: #f2f5f8;
-      color: var(--ink);
-      font-size: 0.9rem;
-      font-weight: 850;
-    }
-
-    .result-message {
-      margin: 18px 0 0;
-      color: var(--muted);
-    }
-
-    .urgent {
-      margin-bottom: 18px;
-      padding: 17px 18px;
-      border-radius: 8px;
-      border: 1px solid rgba(215, 53, 69, 0.35);
-      border-left: 5px solid var(--danger);
-      background: #fff3f4;
-      color: #551922;
-      font-weight: 760;
-    }
-
-    .chart-card,
-    .patterns-card,
-    .diagram-card,
-    .sources-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 20px;
-    }
-
-    .chart-card h3,
-    .patterns-card h3,
-    .diagram-card h3,
-    .sources-card h3 {
-      margin: 0 0 14px;
-      font-size: 1.02rem;
-    }
-
-    .bars {
+    .side-body {
+      padding: 18px;
       display: grid;
       gap: 14px;
     }
 
-    .bar-row {
+    .pill-list {
       display: grid;
-      grid-template-columns: minmax(126px, 180px) 1fr 44px;
-      gap: 12px;
-      align-items: center;
-      color: #334154;
-      font-size: 0.92rem;
-      font-weight: 800;
+      gap: 9px;
     }
 
-    .bar-track {
-      height: 14px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: #e9eef4;
-    }
-
-    .bar-fill {
-      width: 0%;
-      height: 100%;
-      border-radius: inherit;
-      background: var(--blue);
-      transition: width 400ms ease;
-    }
-
-    .bar-fill.cad { background: var(--danger); }
-    .bar-fill.hf { background: var(--blue); }
-    .bar-fill.arr { background: var(--violet); }
-    .bar-fill.valve { background: var(--gold); }
-    .bar-fill.risk { background: var(--green); }
-
-    .patterns-list {
-      display: grid;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .patterns-list li {
-      padding: 13px 14px;
-      border: 1px solid #e4eaf0;
+    .pill {
+      border: 1px solid var(--line);
+      background: #fbfffd;
       border-radius: 8px;
-      background: #fbfdff;
+      padding: 11px 12px;
+      font-weight: 750;
     }
 
-    .patterns-list strong {
-      display: block;
-      margin-bottom: 3px;
+    .safety {
+      border-left: 5px solid var(--red);
+      background: #fff8f6;
+      color: #5c1d17;
+      padding: 13px 14px;
+      border-radius: 8px;
+      font-weight: 700;
     }
 
-    .diagram-card {
-      margin-top: 22px;
+    .sample {
+      width: 100%;
+      text-align: left;
+      background: #f3f8fb;
+      color: #174766;
+      border: 1px solid #c8dce8;
     }
 
-    .heart-diagram {
-      display: grid;
-      grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
-      gap: 20px;
-      align-items: center;
-    }
-
-    .legend {
-      display: grid;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      color: var(--muted);
-      font-size: 0.93rem;
-    }
-
-    .legend li {
-      display: grid;
-      grid-template-columns: 16px 1fr;
-      gap: 10px;
-      align-items: start;
-    }
-
-    .swatch {
-      width: 14px;
-      height: 14px;
-      margin-top: 3px;
-      border-radius: 50%;
-      background: var(--blue);
-    }
-
-    .swatch.red { background: var(--danger); }
-    .swatch.blue { background: var(--blue); }
-    .swatch.violet { background: var(--violet); }
-    .swatch.gold { background: var(--gold); }
-
-    .sources-card {
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .sources-card a {
-      color: #145f98;
-      font-weight: 800;
+    .sample:hover {
+      background: #e6f2f8;
     }
 
     footer {
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: 0.9rem;
+      margin-top: 18px;
+      color: #39473f;
+      font-size: 0.92rem;
+      font-weight: 650;
     }
 
-    @media (max-width: 900px) {
-      main {
-        width: min(100% - 22px, 760px);
-        padding-top: 18px;
-      }
-
-      .hero,
-      .result-grid,
-      .heart-diagram,
-      .age-step {
+    @media (max-width: 880px) {
+      .app {
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        min-height: auto;
-      }
-
-      .heart-stage {
-        max-width: 380px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .survey-header,
-      .results-header,
-      form,
-      .results-body {
-        padding: 18px;
-      }
-
-      .survey-header,
-      .results-header,
-      .form-actions {
+      .toolbar {
         align-items: flex-start;
         flex-direction: column;
       }
 
-      .progress {
-        width: 100%;
-      }
-
-      .options {
-        grid-template-columns: 1fr;
-      }
-
-      .bar-row {
-        grid-template-columns: 1fr 42px;
-      }
-
-      .bar-row span:first-child {
-        grid-column: 1 / -1;
+      .message {
+        max-width: 96%;
       }
     }
   </style>
 </head>
 <body>
   <main>
-    <section class="hero" aria-labelledby="page-title">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span>Heart risk survey</div>
-        <h1 id="page-title">is you have heart dieseae, take this survey and get know ?</h1>
-        <p>This 15-question checker looks at common warning symptoms and major risk factors linked with heart disease. It gives a risk score, symptom-pattern graph, and a clear next-step message.</p>
-        <div class="emergency-note" role="note">
-          <strong>Important:</strong>
-          <span>If you have chest pressure, severe shortness of breath, fainting, pain spreading to the arm/jaw/back, or cold sweat/nausea right now, call emergency services immediately. Do not wait for a web survey.</span>
-        </div>
-      </div>
-
-      <div class="hero-art" aria-hidden="true">
-        <div class="heart-stage">
-          <svg viewBox="0 0 420 460" role="img">
-            <defs>
-              <linearGradient id="heartGrad" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0%" stop-color="#ff7d75"/>
-                <stop offset="48%" stop-color="#d73545"/>
-                <stop offset="100%" stop-color="#8e1830"/>
-              </linearGradient>
-              <linearGradient id="blueFlow" x1="0" x2="1">
-                <stop offset="0%" stop-color="#58a8d8"/>
-                <stop offset="100%" stop-color="#2175b8"/>
-              </linearGradient>
-            </defs>
-            <path d="M208 420C76 324 38 225 68 144c22-60 84-82 139-40 56-42 119-20 142 40 31 82-8 181-141 276Z" fill="url(#heartGrad)"/>
-            <path d="M202 119c-10 58-12 129-7 231" fill="none" stroke="#ffb6ad" stroke-width="14" stroke-linecap="round" opacity=".72"/>
-            <path d="M149 171c45 21 74 48 87 88" fill="none" stroke="#ffded8" stroke-width="10" stroke-linecap="round" opacity=".8"/>
-            <path d="M270 168c-37 29-56 59-62 111" fill="none" stroke="#9a1f35" stroke-width="11" stroke-linecap="round" opacity=".45"/>
-            <path d="M184 83c-4-34 3-57 23-70 23 18 31 42 27 76" fill="none" stroke="#d73545" stroke-width="24" stroke-linecap="round"/>
-            <path d="M136 106c-15-35-13-64 7-86 30 12 48 37 55 72" fill="none" stroke="url(#blueFlow)" stroke-width="24" stroke-linecap="round"/>
-            <path d="M273 106c15-35 13-64-7-86-30 12-48 37-55 72" fill="none" stroke="#a62a40" stroke-width="24" stroke-linecap="round"/>
-            <circle cx="112" cy="236" r="12" fill="#ffffff" opacity=".78"/>
-            <circle cx="305" cy="246" r="9" fill="#ffffff" opacity=".55"/>
-            <path d="M79 258c42 14 74 37 95 73" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity=".45"/>
-          </svg>
-        </div>
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Gemma 4 + Ollama local demo</div>
+        <h1>पशु साथी</h1>
+        <p>ग्रामीण किसानका लागि नेपाली veterinary AI assistant. किसानले लेखेर वा बोलेर पशुको समस्या सोध्न सक्छन्, र Pashu Sathi ले सुरक्षित first-aid guidance दिन्छ।</p>
       </div>
     </section>
 
-    <section class="survey-shell" id="survey-section" aria-labelledby="survey-title">
-      <div class="survey-header">
-        <h2 id="survey-title">Start with your age, then answer all 15 questions.</h2>
-        <div class="progress" aria-label="Survey completion"><span id="progress-bar"></span></div>
-      </div>
-
-      <form id="survey-form" novalidate>
-        <div class="age-step">
-          <label for="age">
-            What is your age?
-            <span class="field-note">Age changes baseline heart risk, so it is asked before the symptom questions.</span>
-          </label>
-          <input id="age" name="age" type="number" min="18" max="120" inputmode="numeric" placeholder="Enter age" required>
+    <section class="app" aria-label="Pashu Sathi assistant">
+      <div class="assistant">
+        <div class="toolbar">
+          <h2>किसानको प्रश्न</h2>
+          <div class="status" id="status"><span></span> Offline local model ready</div>
         </div>
 
-        <div class="questions" id="questions"></div>
+        <div class="chat" id="chat">
+          <div class="message bot">नमस्ते। पशुको समस्या नेपालीमा लेख्नुहोस् वा microphone थिचेर बोल्नुहोस्। म urgency, सम्भावित रोग, पहिलो सहायता, चेतावनी र पशु चिकित्सक बोलाउने अवस्था बताउँछु।</div>
+        </div>
 
-        <div class="form-actions">
-          <div class="validation" id="validation" aria-live="polite"></div>
+        <form class="composer" id="ask-form">
+          <textarea id="question" placeholder="उदाहरण: मेरो भैंसीको थन सुन्निएको छ, दूधमा रगत आएको छ। के गर्ने?"></textarea>
           <div class="button-row">
-            <button type="button" class="secondary" id="reset-button">Reset</button>
-            <button type="submit">Submit and see results</button>
+            <button type="button" class="secondary" id="voice-button">🎙️ बोलेर सोध्नुहोस्</button>
+            <button type="submit" id="ask-button">सोध्नुहोस्</button>
+            <button type="button" class="warn" id="speak-button">🔊 उत्तर सुन्नुहोस्</button>
+            <button type="button" class="secondary" id="clear-button">Clear</button>
           </div>
-        </div>
-      </form>
-    </section>
-
-    <section class="results-shell hidden" id="results-section" aria-labelledby="results-title">
-      <div class="results-header">
-        <h2 id="results-title">Your heart survey result</h2>
-        <button type="button" class="secondary" id="edit-button">Edit answers</button>
+          <p class="hint" id="voice-hint">Voice mode पढ्न नसक्ने किसानका लागि हो। Browser ले Nepali speech recognition support गरेमा बोलेको कुरा text box मा आउँछ।</p>
+        </form>
       </div>
 
-      <div class="results-body">
-        <div id="urgent-result" class="urgent hidden"></div>
-        <div class="result-grid">
-          <div class="score-card">
-            <div>Heart concern score</div>
-            <div class="score-number"><strong id="score">0</strong><span>/100</span></div>
-            <div class="risk-level" id="risk-level">Low</div>
-            <p class="result-message" id="result-message"></p>
+      <aside class="side">
+        <h2>Safety-first design</h2>
+        <div class="side-body">
+          <div class="safety">Pashu Sathi पशु चिकित्सकको replacement होइन। यसले drug name, brand, dose, ml, mg/kg prescribe गर्दैन।</div>
+          <div class="pill-list">
+            <div class="pill">✅ Nepali Devanagari</div>
+            <div class="pill">✅ Voice input for low-literacy farmers</div>
+            <div class="pill">✅ Local Ollama model: pashu</div>
+            <div class="pill">✅ Vet referral and red flags</div>
           </div>
-
-          <div class="chart-card">
-            <h3>Pattern graph</h3>
-            <div class="bars" id="bars"></div>
-          </div>
+          <button type="button" class="sample" data-sample="मेरो भैंसीको थन सुन्निएको छ, दूधमा रगत आएको छ। के गर्ने?">Mastitis demo query</button>
+          <button type="button" class="sample" data-sample="मेरो गाईको पेट एकदम फुलेको छ, सास फेर्न गाह्रो भएको छ। तुरुन्त के गर्ने?">Bloat emergency query</button>
+          <button type="button" class="sample" data-sample="गर्मीमा भैंसी हाँफिरहेको छ, खान कम भएको छ, दूध पनि घट्यो। के गर्ने?">Heat stress query</button>
         </div>
-
-        <div class="diagram-card">
-          <h3>Heart diagram</h3>
-          <div class="heart-diagram">
-            <svg viewBox="0 0 390 360" role="img" aria-label="Heart diagram showing coronary arteries, chambers, rhythm, and valves">
-              <defs>
-                <linearGradient id="diagramHeart" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0%" stop-color="#ff827a"/>
-                  <stop offset="54%" stop-color="#d73545"/>
-                  <stop offset="100%" stop-color="#8f1830"/>
-                </linearGradient>
-                <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#7a1e2f" flood-opacity=".22"/>
-                </filter>
-              </defs>
-              <path filter="url(#softShadow)" d="M196 326C86 246 54 162 79 94c19-50 71-68 116-34 47-34 99-16 118 34 26 68-7 152-117 232Z" fill="url(#diagramHeart)"/>
-              <path d="M97 152c44 5 78 20 101 51 21-32 55-48 96-54" fill="none" stroke="#ffffff" stroke-width="6" opacity=".4"/>
-              <path id="cad-path" d="M109 156c42 17 68 43 83 88" fill="none" stroke="#d73545" stroke-width="10" stroke-linecap="round"/>
-              <path id="hf-path" d="M200 90c-5 58-3 128 7 198" fill="none" stroke="#2175b8" stroke-width="10" stroke-linecap="round"/>
-              <path id="arr-path" d="M262 91l-24 46 39 5-37 67" fill="none" stroke="#7660b8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-              <path id="valve-path" d="M160 178c20-16 48-16 70 1m-64 42c21 15 48 15 69-1" fill="none" stroke="#d89018" stroke-width="8" stroke-linecap="round"/>
-              <circle cx="190" cy="214" r="18" fill="rgba(255,255,255,.16)" stroke="#fff" stroke-width="3" opacity=".72"/>
-              <text x="103" y="145" fill="#ffffff" font-size="18" font-weight="800">arteries</text>
-              <text x="226" y="85" fill="#ffffff" font-size="18" font-weight="800">rhythm</text>
-              <text x="136" y="258" fill="#ffffff" font-size="18" font-weight="800">pump</text>
-            </svg>
-            <ul class="legend">
-              <li><span class="swatch red"></span><span>Red arteries: chest discomfort, pressure, or pain spreading to arm, jaw, back, or stomach can fit a coronary artery disease or heart attack warning pattern.</span></li>
-              <li><span class="swatch blue"></span><span>Blue center: shortness of breath, swelling, and fatigue can fit a heart failure or poor pumping pattern.</span></li>
-              <li><span class="swatch violet"></span><span>Purple line: racing, irregular beats, dizziness, or fainting can fit an arrhythmia pattern.</span></li>
-              <li><span class="swatch gold"></span><span>Gold valve marks: murmur history, valve disease, fainting, chest pain, and shortness of breath can fit a valve disease pattern.</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="patterns-card" style="margin-top:22px;">
-          <h3>What kind of heart issue does this suggest?</h3>
-          <ul class="patterns-list" id="patterns-list"></ul>
-        </div>
-
-        <div class="sources-card">
-          <h3>Medical basis</h3>
-          <p>This is an educational screening tool, not a diagnosis. The questions are based on commonly listed symptoms and risk factors from the CDC, American Heart Association, and Mayo Clinic.</p>
-          <p>
-            Sources:
-            <a href="https://www.cdc.gov/heart-disease/risk-factors/index.html" target="_blank" rel="noopener">CDC heart disease risk factors</a>,
-            <a href="https://www.heart.org/en/about-us/heart-attack-and-stroke-symptoms" target="_blank" rel="noopener">American Heart Association warning symptoms</a>,
-            <a href="https://www.mayoclinic.org/diseases-conditions/heart-disease/symptoms-causes/syc-20353118" target="_blank" rel="noopener">Mayo Clinic heart disease symptoms and types</a>.
-          </p>
-        </div>
-      </div>
+      </aside>
     </section>
 
     <footer>
-      This page cannot confirm or rule out heart disease. A clinician may use blood pressure checks, blood tests, ECG/EKG, echocardiogram, stress testing, CT imaging, or other exams when appropriate.
+      Run Ollama first: <strong>ollama run pashu</strong>. This page calls <strong>http://127.0.0.1:11434</strong> on the same laptop.
     </footer>
   </main>
 
   <script>
-    const questions = [
-      {
-        id: "chest",
-        text: "Do you get chest pain, pressure, tightness, heaviness, or burning?",
-        hint: "Especially with activity, stress, cold air, or after a meal.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Sometimes", total: 7, cad: 18 },
-          { label: "At rest or often", total: 14, cad: 28, valve: 8, urgent: 1 }
-        ]
-      },
-      {
-        id: "spread",
-        text: "Does chest discomfort spread to your arm, shoulder, back, neck, jaw, or upper stomach?",
-        hint: "Pain spreading from the chest is a recognized warning symptom.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Not sure", total: 5, cad: 12 },
-          { label: "Yes", total: 13, cad: 26, urgent: 1 }
-        ]
-      },
-      {
-        id: "breath",
-        text: "Do you have shortness of breath during normal activity, at rest, or when lying flat?",
-        hint: "This can appear with several heart conditions and also with lung or other illnesses.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "With activity", total: 7, hf: 18, valve: 10, cad: 8 },
-          { label: "At rest or lying flat", total: 14, hf: 28, valve: 16, cad: 12, urgent: 1 }
-        ]
-      },
-      {
-        id: "palpitations",
-        text: "Do you feel racing, fluttering, skipped, or irregular heartbeats?",
-        hint: "Frequent or persistent rhythm symptoms deserve medical discussion.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Sometimes", total: 5, arr: 18 },
-          { label: "Often", total: 10, arr: 30, urgent: 1 }
-        ]
-      },
-      {
-        id: "fainting",
-        text: "Have you fainted, nearly fainted, or become very dizzy during activity?",
-        hint: "Fainting with exertion can be important for rhythm, valve, or blood-flow problems.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Once or unsure", total: 7, arr: 16, valve: 12 },
-          { label: "Yes", total: 13, arr: 28, valve: 20, urgent: 1 }
-        ]
-      },
-      {
-        id: "swelling",
-        text: "Do your ankles, legs, feet, or belly swell, or have you gained weight quickly from fluid?",
-        hint: "Fluid swelling can fit a heart failure pattern, but has other causes too.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Mild", total: 6, hf: 18, valve: 8 },
-          { label: "Yes", total: 11, hf: 28, valve: 12 }
-        ]
-      },
-      {
-        id: "fatigue",
-        text: "Do you have unusual tiredness or weakness that limits normal daily tasks?",
-        hint: "Fatigue is nonspecific, but it matters more when paired with breathing, chest, or swelling symptoms.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Sometimes", total: 4, hf: 10, cad: 6 },
-          { label: "Yes", total: 9, hf: 20, cad: 10 }
-        ]
-      },
-      {
-        id: "sweat-nausea",
-        text: "Do you get cold sweats, nausea, vomiting, or sudden anxiety with chest discomfort?",
-        hint: "These can be warning signs when they occur with chest symptoms.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Not sure", total: 5, cad: 12 },
-          { label: "Yes", total: 12, cad: 24, urgent: 1 }
-        ]
-      },
-      {
-        id: "bp",
-        text: "Have you been told you have high blood pressure, or do you take blood pressure medicine?",
-        hint: "High blood pressure is a major heart disease risk factor.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Borderline", total: 5, risk: 14, hf: 5 },
-          { label: "Yes", total: 10, risk: 24, hf: 8, cad: 6 }
-        ]
-      },
-      {
-        id: "cholesterol",
-        text: "Have you been told you have high cholesterol, plaque, or take cholesterol medicine?",
-        hint: "Cholesterol can contribute to artery plaque over time.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Borderline", total: 4, risk: 12, cad: 6 },
-          { label: "Yes", total: 9, risk: 22, cad: 12 }
-        ]
-      },
-      {
-        id: "diabetes",
-        text: "Do you have diabetes, prediabetes, or high blood sugar?",
-        hint: "Diabetes and high blood sugar increase cardiovascular risk.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Prediabetes", total: 5, risk: 14, cad: 6 },
-          { label: "Diabetes", total: 10, risk: 24, cad: 12 }
-        ]
-      },
-      {
-        id: "smoking",
-        text: "Do you currently smoke, vape nicotine, or did you quit within the last year?",
-        hint: "Tobacco and nicotine exposure raise heart and blood vessel risk.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Quit recently", total: 5, risk: 14, cad: 6 },
-          { label: "Yes", total: 10, risk: 24, cad: 12 }
-        ]
-      },
-      {
-        id: "family",
-        text: "Did a close family member have early heart disease or sudden cardiac death?",
-        hint: "Early means before age 55 in men or before age 65 in women.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Not sure", total: 3, risk: 8 },
-          { label: "Yes", total: 9, risk: 20, cad: 8, arr: 4 }
-        ]
-      },
-      {
-        id: "activity-weight",
-        text: "Are you physically inactive most weeks, or have a weight your clinician has said is unhealthy?",
-        hint: "This question is about known risk patterns, not appearance.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "One of these", total: 5, risk: 12, hf: 5 },
-          { label: "Both", total: 9, risk: 20, hf: 8 }
-        ]
-      },
-      {
-        id: "valve-history",
-        text: "Have you been told you have a heart murmur, valve disease, rheumatic fever, or a heart condition from birth?",
-        hint: "This helps identify a valve or structural heart pattern.",
-        answers: [
-          { label: "No", total: 0 },
-          { label: "Not sure", total: 4, valve: 10 },
-          { label: "Yes", total: 11, valve: 30, arr: 8, hf: 8 }
-        ]
-      }
-    ];
+    const chat = document.querySelector("#chat");
+    const form = document.querySelector("#ask-form");
+    const questionInput = document.querySelector("#question");
+    const askButton = document.querySelector("#ask-button");
+    const voiceButton = document.querySelector("#voice-button");
+    const speakButton = document.querySelector("#speak-button");
+    const clearButton = document.querySelector("#clear-button");
+    const voiceHint = document.querySelector("#voice-hint");
+    const statusEl = document.querySelector("#status");
 
-    const form = document.querySelector("#survey-form");
-    const ageInput = document.querySelector("#age");
-    const questionsWrap = document.querySelector("#questions");
-    const validation = document.querySelector("#validation");
-    const progressBar = document.querySelector("#progress-bar");
-    const resultsSection = document.querySelector("#results-section");
-    const surveySection = document.querySelector("#survey-section");
-    const scoreEl = document.querySelector("#score");
-    const riskLevelEl = document.querySelector("#risk-level");
-    const resultMessageEl = document.querySelector("#result-message");
-    const barsEl = document.querySelector("#bars");
-    const urgentEl = document.querySelector("#urgent-result");
-    const patternsList = document.querySelector("#patterns-list");
+    let lastAnswer = "";
+    let recognition = null;
+    let listening = false;
 
-    function renderQuestions() {
-      questionsWrap.innerHTML = questions.map((question, index) => {
-        const answers = question.answers.map((answer, answerIndex) => `
-          <label class="option">
-            <input type="radio" name="${question.id}" value="${answerIndex}" required>
-            <span>${answer.label}</span>
-          </label>
-        `).join("");
-
-        return `
-          <fieldset class="question">
-            <legend>${index + 1}. ${question.text}</legend>
-            <p class="hint">${question.hint}</p>
-            <div class="options">${answers}</div>
-          </fieldset>
-        `;
-      }).join("");
+    function addMessage(text, type) {
+      const message = document.createElement("div");
+      message.className = `message ${type}`;
+      message.textContent = text;
+      chat.appendChild(message);
+      chat.scrollTop = chat.scrollHeight;
+      return message;
     }
 
-    function getAgePoints(age) {
-      if (age >= 75) return 18;
-      if (age >= 65) return 14;
-      if (age >= 55) return 10;
-      if (age >= 40) return 6;
-      return 0;
+    function setStatus(text, busy = false) {
+      statusEl.innerHTML = `<span></span> ${text}`;
+      askButton.disabled = busy;
     }
 
-    function clampScore(value) {
-      return Math.max(0, Math.min(100, Math.round(value)));
+    function cleanThinking(text) {
+      return text
+        .replace(/Thinking Process:[\s\S]*?(?=\n\n[^\n]+|$)/gi, "")
+        .replace(/<think>[\s\S]*?<\/think>/gi, "")
+        .trim();
     }
 
-    function getCompletion() {
-      const answered = questions.filter((question) => form.elements[question.id].value !== "").length;
-      const hasAge = ageInput.value.trim() !== "";
-      return Math.round(((answered + (hasAge ? 1 : 0)) / (questions.length + 1)) * 100);
-    }
-
-    function updateProgress() {
-      progressBar.style.width = `${getCompletion()}%`;
-    }
-
-    function collectScores() {
-      const age = Number(ageInput.value);
-      const raw = {
-        total: getAgePoints(age),
-        cad: age >= 55 ? 5 : 0,
-        hf: age >= 65 ? 5 : 0,
-        arr: age >= 65 ? 4 : 0,
-        valve: age >= 65 ? 4 : 0,
-        risk: getAgePoints(age),
-        urgent: 0
-      };
-      const selected = {};
-
-      questions.forEach((question) => {
-        const answer = question.answers[Number(form.elements[question.id].value)];
-        selected[question.id] = answer;
-        Object.keys(raw).forEach((key) => {
-          raw[key] += answer[key] || 0;
-        });
-      });
-
-      const patterns = {
-        cad: clampScore((raw.cad / 118) * 100),
-        hf: clampScore((raw.hf / 98) * 100),
-        arr: clampScore((raw.arr / 74) * 100),
-        valve: clampScore((raw.valve / 88) * 100),
-        risk: clampScore((raw.risk / 118) * 100)
-      };
-
-      const symptomBoost = Math.max(patterns.cad, patterns.hf, patterns.arr, patterns.valve) * 0.28;
-      const total = clampScore(raw.total * 0.55 + symptomBoost + patterns.risk * 0.22);
-
-      return { age, raw, patterns, total, selected };
-    }
-
-    function getRiskLabel(score) {
-      if (score >= 75) return "Very high concern";
-      if (score >= 55) return "High concern";
-      if (score >= 30) return "Moderate concern";
-      return "Lower concern";
-    }
-
-    function getMessage(score) {
-      if (score >= 75) {
-        return "Your answers show strong warning symptoms or major risk factors. Please arrange urgent medical care, and use emergency services right now if symptoms are active or severe.";
-      }
-      if (score >= 55) {
-        return "Your answers show a meaningful heart-disease concern. A medical appointment soon is appropriate, especially if symptoms are new, worsening, or happening with activity.";
-      }
-      if (score >= 30) {
-        return "Your answers show some risk or symptoms worth discussing with a clinician, especially if you have high blood pressure, diabetes, high cholesterol, or family history.";
-      }
-      return "Your answers do not strongly suggest heart disease, but this survey cannot rule it out. Keep routine checkups and seek care if new symptoms appear.";
-    }
-
-    function makePatternList(patterns) {
-      const items = [
-        {
-          key: "cad",
-          title: "Possible coronary artery disease or angina pattern",
-          text: "More likely when chest pressure, pain spreading to arm/jaw/back, shortness of breath, sweating, nausea, or artery risk factors are present."
-        },
-        {
-          key: "hf",
-          title: "Possible heart failure or pumping-strain pattern",
-          text: "More likely when shortness of breath, swelling, rapid fluid weight gain, and unusual fatigue cluster together."
-        },
-        {
-          key: "arr",
-          title: "Possible arrhythmia pattern",
-          text: "More likely when racing, fluttering, irregular beats, dizziness, or fainting are prominent."
-        },
-        {
-          key: "valve",
-          title: "Possible valve or structural heart pattern",
-          text: "More likely with known murmur or valve history plus shortness of breath, chest pain, dizziness, or fainting."
-        },
-        {
-          key: "risk",
-          title: "Cardiometabolic risk pattern",
-          text: "More likely with high blood pressure, cholesterol, diabetes, tobacco exposure, inactivity, unhealthy weight, age, or family history."
+    async function askPashuSathi(question) {
+      const body = {
+        model: "pashu",
+        messages: [{ role: "user", content: question }],
+        stream: false,
+        think: false,
+        options: {
+          temperature: 0.3,
+          top_p: 0.9,
+          repeat_penalty: 1.1,
+          num_predict: 650
         }
-      ];
-
-      const ranked = items
-        .map((item) => ({ ...item, value: patterns[item.key] }))
-        .sort((a, b) => b.value - a.value);
-
-      const meaningful = ranked.filter((item) => item.value >= 35).slice(0, 3);
-      const display = meaningful.length ? meaningful : [ranked[0]];
-
-      patternsList.innerHTML = display.map((item) => `
-        <li>
-          <strong>${item.title}: ${item.value}/100</strong>
-          <span>${item.text}</span>
-        </li>
-      `).join("");
-    }
-
-    function renderBars(patterns) {
-      const rows = [
-        ["Coronary / angina", patterns.cad, "cad"],
-        ["Heart failure", patterns.hf, "hf"],
-        ["Arrhythmia", patterns.arr, "arr"],
-        ["Valve / structural", patterns.valve, "valve"],
-        ["Risk factors", patterns.risk, "risk"]
-      ];
-
-      barsEl.innerHTML = rows.map(([label, value, key]) => `
-        <div class="bar-row">
-          <span>${label}</span>
-          <div class="bar-track" aria-hidden="true"><div class="bar-fill ${key}" style="width:${value}%"></div></div>
-          <span>${value}</span>
-        </div>
-      `).join("");
-    }
-
-    function setDiagramEmphasis(patterns) {
-      const map = {
-        "cad-path": patterns.cad,
-        "hf-path": patterns.hf,
-        "arr-path": patterns.arr,
-        "valve-path": patterns.valve
       };
 
-      Object.entries(map).forEach(([id, value]) => {
-        const el = document.getElementById(id);
-        el.style.opacity = String(0.28 + (value / 100) * 0.72);
-        el.style.strokeWidth = String(6 + Math.round((value / 100) * 7));
+      const response = await fetch("http://127.0.0.1:11434/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok) {
+        throw new Error("Ollama response failed");
+      }
+
+      const data = await response.json();
+      return cleanThinking(data.message?.content || data.response || "");
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const question = questionInput.value.trim();
+      if (!question) {
+        questionInput.focus();
+        return;
+      }
+
+      addMessage(question, "user");
+      questionInput.value = "";
+      const pending = addMessage("Pashu Sathi सोच्दैछ... कृपया पर्खनुहोस्।", "bot");
+      setStatus("Gemma 4 local model responding...", true);
+
+      try {
+        const answer = await askPashuSathi(question);
+        lastAnswer = answer || "उत्तर खाली आयो। कृपया फेरि सोध्नुहोस्।";
+        pending.textContent = lastAnswer;
+        setStatus("Offline local model ready");
+      } catch (error) {
+        pending.textContent = "Ollama local server भेटिएन। कृपया पहिले Ollama खोल्नुहोस् र `ollama run pashu` चलाउनुहोस्। त्यसपछि फेरि प्रयास गर्नुहोस्।";
+        setStatus("Ollama connection needed");
+      }
+    });
+
+    clearButton.addEventListener("click", () => {
+      chat.innerHTML = "";
+      lastAnswer = "";
+      addMessage("नयाँ प्रश्न लेख्नुहोस् वा microphone थिचेर बोल्नुहोस्।", "bot");
+      questionInput.focus();
+    });
+
+    document.querySelectorAll(".sample").forEach((button) => {
+      button.addEventListener("click", () => {
+        questionInput.value = button.dataset.sample;
+        questionInput.focus();
+      });
+    });
+
+    function setupVoiceMode() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        voiceButton.disabled = true;
+        voiceHint.textContent = "यो browser मा speech recognition छैन। Text mode प्रयोग गर्नुहोस्।";
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.lang = "ne-NP";
+      recognition.interimResults = true;
+      recognition.continuous = false;
+
+      recognition.addEventListener("start", () => {
+        listening = true;
+        voiceButton.textContent = "🎙️ सुनिरहेको छ...";
+        setStatus("Voice input listening...");
+      });
+
+      recognition.addEventListener("result", (event) => {
+        let transcript = "";
+        for (let i = event.resultIndex; i < event.results.length; i += 1) {
+          transcript += event.results[i][0].transcript;
+        }
+        questionInput.value = transcript.trim();
+      });
+
+      recognition.addEventListener("end", () => {
+        listening = false;
+        voiceButton.textContent = "🎙️ बोलेर सोध्नुहोस्";
+        setStatus("Offline local model ready");
+      });
+
+      recognition.addEventListener("error", () => {
+        listening = false;
+        voiceButton.textContent = "🎙️ बोलेर सोध्नुहोस्";
+        voiceHint.textContent = "Voice सुन्न सकेन। कृपया फेरि बोल्नुहोस् वा text लेख्नुहोस्।";
       });
     }
 
-    function validateForm() {
-      const age = Number(ageInput.value);
-      if (!Number.isFinite(age) || age < 18 || age > 120) {
-        validation.textContent = "Enter an age from 18 to 120.";
-        ageInput.focus();
-        return false;
+    voiceButton.addEventListener("click", () => {
+      if (!recognition) return;
+      if (listening) {
+        recognition.stop();
+      } else {
+        recognition.start();
       }
-
-      const firstMissing = questions.find((question) => form.elements[question.id].value === "");
-      if (firstMissing) {
-        validation.textContent = "Please answer all 15 questions before submitting.";
-        const fieldset = form.elements[firstMissing.id][0].closest("fieldset");
-        fieldset.scrollIntoView({ behavior: "smooth", block: "center" });
-        return false;
-      }
-
-      validation.textContent = "";
-      return true;
-    }
-
-    function showResults(event) {
-      event.preventDefault();
-      updateProgress();
-
-      if (!validateForm()) return;
-
-      const results = collectScores();
-      scoreEl.textContent = results.total;
-      riskLevelEl.textContent = getRiskLabel(results.total);
-      resultMessageEl.textContent = getMessage(results.total);
-
-      const hasUrgentPattern = results.raw.urgent >= 2 || (results.selected.chest.urgent && results.selected["sweat-nausea"].urgent);
-      urgentEl.classList.toggle("hidden", !hasUrgentPattern);
-      if (hasUrgentPattern) {
-        urgentEl.textContent = "Your answers include possible warning symptoms. If these symptoms are happening now, especially chest pressure, pain spreading to arm/jaw/back, severe shortness of breath, fainting, cold sweat, or nausea, call emergency services immediately.";
-      }
-
-      renderBars(results.patterns);
-      makePatternList(results.patterns);
-      setDiagramEmphasis(results.patterns);
-
-      resultsSection.classList.remove("hidden");
-      resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    function resetSurvey() {
-      form.reset();
-      validation.textContent = "";
-      resultsSection.classList.add("hidden");
-      progressBar.style.width = "0%";
-      ageInput.focus();
-    }
-
-    renderQuestions();
-    form.addEventListener("input", updateProgress);
-    form.addEventListener("change", updateProgress);
-    form.addEventListener("submit", showResults);
-    document.querySelector("#reset-button").addEventListener("click", resetSurvey);
-    document.querySelector("#edit-button").addEventListener("click", () => {
-      surveySection.scrollIntoView({ behavior: "smooth", block: "start" });
     });
+
+    speakButton.addEventListener("click", () => {
+      const text = lastAnswer || "पहिले Pashu Sathi लाई प्रश्न सोध्नुहोस्।";
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "ne-NP";
+      utterance.rate = 0.92;
+      window.speechSynthesis.speak(utterance);
+    });
+
+    setupVoiceMode();
   </script>
 </body>
 </html>

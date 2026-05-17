@@ -1,4 +1,4 @@
-# Pashu Sathi (पशु साथी)
+# Pashu Sathi
 
 Offline Nepali veterinary AI assistant for rural livestock farmers, powered by Gemma 4 and Ollama.
 
@@ -13,7 +13,17 @@ Pashu Sathi is built to be:
 - Offline-first: runs locally after setup
 - Nepali-first: responds in Devanagari Nepali
 - Safety-first: does not prescribe drug names, brands, or doses
+- Voice-friendly: farmers with limited literacy can speak their problem instead of typing
 - Vet-bridging: guides farmers toward licensed veterinary care
+
+## Key Features
+
+- Nepali Devanagari veterinary guidance
+- Voice input button for farmers who cannot easily read or type
+- Text-to-speech answer playback
+- Local Ollama connection to the custom `pashu` model
+- Demo screenshots for 10 critical livestock conditions
+- Conservative safety policy with veterinarian referral
 
 ## Technology
 
@@ -25,16 +35,16 @@ Pashu Sathi is built to be:
 
 ## Covered Conditions
 
-1. Mastitis / थन सुन्निने
-2. Foot and Mouth Disease / खोरेत
-3. Bloat / पेट फुल्ने
-4. Milk Fever / दूध ज्वरो
-5. Calf Diarrhea / बाच्छाको झाडापखाला
-6. Internal Parasites / आन्द्राको जुका
-7. Retained Placenta / साल नझर्ने
-8. PPR / बाख्राको प्लेग
-9. Newcastle Disease / राणीखेत
-10. Heat Stress / गर्मीको असर
+1. Mastitis
+2. Foot and Mouth Disease
+3. Bloat
+4. Milk Fever
+5. Calf Diarrhea
+6. Internal Parasites
+7. Retained Placenta
+8. PPR
+9. Newcastle Disease
+10. Heat Stress
 
 ## Run Locally
 
@@ -56,11 +66,23 @@ Run the assistant:
 ollama run pashu
 ```
 
+Open `index.html` in a browser on the same laptop. The page calls the local Ollama server at:
+
+```text
+http://127.0.0.1:11434
+```
+
 Example query:
 
 ```text
 मेरो भैंसीको थन सुन्निएको छ, दूधमा रगत आएको छ। के गर्ने?
 ```
+
+## Voice Mode
+
+The demo page includes a microphone button so farmers can speak their problem. Browser speech recognition support depends on the browser and device. If speech recognition is unavailable, the text mode remains available.
+
+The answer can also be read aloud with the speaker button. This supports farmers who are less comfortable reading long text.
 
 ## Safety Policy
 
@@ -86,17 +108,18 @@ It does provide:
 
 ```text
 pashu-sathi/
-├── README.md
-├── LICENSE
-├── Modelfile
-├── index.html
-├── docs/
-│   ├── pashu_sathi_prompt.txt
-│   └── pashu_sathi_knowledge.docx
-└── demo/
-    ├── screenshots/
-    └── video/
-        └── README.md
+|-- README.md
+|-- LICENSE
+|-- Modelfile
+|-- index.html
+|-- docs/
+|   |-- pashu_sathi_prompt.txt
+|   `-- pashu_sathi_knowledge.docx
+`-- demo/
+    |-- queries.md
+    |-- screenshots/
+    `-- video/
+        `-- README.md
 ```
 
 ## Author
