@@ -134,6 +134,14 @@
       background: var(--green);
     }
 
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
     .chat {
       min-height: 360px;
       max-height: 54vh;
@@ -228,6 +236,18 @@
       background: #fff6df;
       color: #80520d;
       border: 1px solid #edd18b;
+    }
+
+    button.stop {
+      min-height: 38px;
+      padding: 0 13px;
+      background: #fff1f1;
+      color: #9c2020;
+      border: 1px solid #e6b8b8;
+    }
+
+    button.stop:hover {
+      background: #ffe2e2;
     }
 
     button[disabled] {
@@ -327,7 +347,9 @@
       <div class="assistant">
         <div class="toolbar">
           <h2>किसानको प्रश्न</h2>
-          <div class="status" id="status"><span></span> Offline local model ready</div>
+          <div class="toolbar-actions">
+            <div class="status" id="status"><span></span> Offline local model ready</div>
+          </div>
         </div>
 
         <div class="chat" id="chat">
@@ -340,6 +362,7 @@
             <button type="button" class="secondary" id="voice-button">🎙️ बोलेर सोध्नुहोस्</button>
             <button type="submit" id="ask-button">सोध्नुहोस्</button>
             <button type="button" class="warn" id="speak-button">🔊 उत्तर सुन्नुहोस्</button>
+            <button type="button" class="stop" id="stop-button">Stop</button>
             <button type="button" class="secondary" id="clear-button">Clear</button>
           </div>
           <p class="hint" id="voice-hint">Voice mode पढ्न नसक्ने किसानका लागि हो। Browser ले Nepali speech recognition support गरेमा बोलेको कुरा text box मा आउँछ।</p>
@@ -375,6 +398,7 @@
     const askButton = document.querySelector("#ask-button");
     const voiceButton = document.querySelector("#voice-button");
     const speakButton = document.querySelector("#speak-button");
+    const stopButton = document.querySelector("#stop-button");
     const clearButton = document.querySelector("#clear-button");
     const voiceHint = document.querySelector("#voice-hint");
     const statusEl = document.querySelector("#status");
@@ -382,6 +406,8 @@
     let lastAnswer = "";
     let recognition = null;
     let listening = false;
+    let activeRequest = null;
+    let activePendingMessage = null;
 
     function addMessage(text, type) {
       const message = document.createElement("div");
@@ -404,7 +430,7 @@
         .trim();
     }
 
-    async function askPashuSathi(question) {
+    async function askPashuSathi(question, signal) {
       const body = {
         model: "pashu",
         messages: [{ role: "user", content: question }],
@@ -414,14 +440,15 @@
           temperature: 0.3,
           top_p: 0.9,
           repeat_penalty: 1.1,
-          num_predict: 650
+          num_predict: 300
         }
       };
 
       const response = await fetch("http://127.0.0.1:11434/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        signal
       });
 
       if (!response.ok) {
@@ -443,25 +470,59 @@
       addMessage(question, "user");
       questionInput.value = "";
       const pending = addMessage("Pashu Sathi सोच्दैछ... कृपया पर्खनुहोस्।", "bot");
+      activePendingMessage = pending;
+      activeRequest = new AbortController();
       setStatus("Gemma 4 local model responding...", true);
 
       try {
-        const answer = await askPashuSathi(question);
+        const answer = await askPashuSathi(question, activeRequest.signal);
         lastAnswer = answer || "उत्तर खाली आयो। कृपया फेरि सोध्नुहोस्।";
         pending.textContent = lastAnswer;
         setStatus("Offline local model ready");
       } catch (error) {
-        pending.textContent = "Ollama local server भेटिएन। कृपया पहिले Ollama खोल्नुहोस् र `ollama run pashu` चलाउनुहोस्। त्यसपछि फेरि प्रयास गर्नुहोस्।";
-        setStatus("Ollama connection needed");
+        if (error.name === "AbortError") {
+          pending.textContent = "उत्तर रोकियो। नयाँ प्रश्न सोध्न सक्नुहुन्छ।";
+          setStatus("Stopped");
+        } else {
+          pending.textContent = "Ollama local server भेटिएन। कृपया पहिले Ollama खोल्नुहोस् र `ollama run pashu` चलाउनुहोस्। त्यसपछि फेरि प्रयास गर्नुहोस्।";
+          setStatus("Ollama connection needed");
+        }
+      } finally {
+        activeRequest = null;
+        activePendingMessage = null;
+        askButton.disabled = false;
       }
     });
 
     clearButton.addEventListener("click", () => {
       chat.innerHTML = "";
       lastAnswer = "";
+      stopAll();
       addMessage("नयाँ प्रश्न लेख्नुहोस् वा microphone थिचेर बोल्नुहोस्।", "bot");
       questionInput.focus();
     });
+
+    function stopAll() {
+      if (activeRequest) {
+        activeRequest.abort();
+        activeRequest = null;
+      }
+
+      if (recognition && listening) {
+        recognition.stop();
+      }
+
+      window.speechSynthesis.cancel();
+
+      if (activePendingMessage && activePendingMessage.textContent.includes("सोच्दैछ")) {
+        activePendingMessage.textContent = "उत्तर रोकियो। नयाँ प्रश्न सोध्न सक्नुहुन्छ।";
+      }
+
+      askButton.disabled = false;
+      setStatus("Stopped");
+    }
+
+    stopButton.addEventListener("click", stopAll);
 
     document.querySelectorAll(".sample").forEach((button) => {
       button.addEventListener("click", () => {
@@ -519,13 +580,111 @@
       }
     });
 
-    speakButton.addEventListener("click", () => {
-      const text = lastAnswer || "पहिले Pashu Sathi लाई प्रश्न सोध्नुहोस्।";
+    function getBestNepaliVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      return voices.find((voice) => voice.lang.toLowerCase().startsWith("ne"))
+        || voices.find((voice) => voice.name.toLowerCase().includes("nepali"))
+        || voices.find((voice) => voice.lang.toLowerCase().startsWith("hi"))
+        || voices.find((voice) => voice.name.toLowerCase().includes("hindi"))
+        || null;
+    }
+
+    function makeNepaliSpeechText(text) {
+      const replacements = [
+        [/antibiotics?/gi, "प्रतिजैविक औषधि"],
+        [/saline solution/gi, "नुन पानीको घोल"],
+        [/electrolyte solution/gi, "जीवनजल जस्तो घोल"],
+        [/dehydration/gi, "शरीरमा पानीको कमी"],
+        [/mastitis/gi, "थनको संक्रमण"],
+        [/foot and mouth disease|fmd/gi, "खोरेत"],
+        [/bloat/gi, "पेट फुल्ने समस्या"],
+        [/milk fever/gi, "दूध ज्वरो"],
+        [/calf diarrhea/gi, "बाच्छाको झाडापखाला"],
+        [/internal parasites?/gi, "आन्द्राको जुका"],
+        [/retained placenta/gi, "साल नझर्ने समस्या"],
+        [/newcastle disease/gi, "राणीखेत"],
+        [/heat stress/gi, "गर्मीको असर"],
+        [/emergency/gi, "आपतकालीन अवस्था"],
+        [/urgent visit/gi, "तुरुन्त पशु चिकित्सक भेट्नुहोस्"],
+        [/monitor/gi, "निगरानी गर्नुहोस्"],
+        [/isolation/gi, "छुट्टै राख्नुहोस्"],
+        [/first aid/gi, "पहिलो सहायता"],
+        [/treatment/gi, "उपचार"],
+        [/vet|veterinarian/gi, "पशु चिकित्सक"],
+        [/ollama|gemma|pashu sathi/gi, ""],
+        [/mg\/kg|ml|tablet|brand/gi, ""]
+      ];
+
+      let spoken = text;
+      replacements.forEach(([pattern, replacement]) => {
+        spoken = spoken.replace(pattern, replacement);
+      });
+
+      return spoken
+        .replace(/\*\*/g, "")
+        .replace(/`([^`]+)`/g, "$1")
+        .replace(/\([^)]*\)/g, "")
+        .replace(/[A-Za-z][A-Za-z0-9/._-]*/g, "")
+        .replace(/[#*_>~[\]{}]/g, "")
+        .replace(/[•\-]/g, " ")
+        .replace(/\s+/g, " ")
+        .replace(/\s+([।,!?])/g, "$1")
+        .trim();
+    }
+
+    function splitForSpeech(text) {
+      const sentences = text.split(/(?<=[।!?])\s+/);
+      const chunks = [];
+      let current = "";
+
+      sentences.forEach((sentence) => {
+        if ((current + " " + sentence).trim().length > 180) {
+          if (current.trim()) chunks.push(current.trim());
+          current = sentence;
+        } else {
+          current = `${current} ${sentence}`.trim();
+        }
+      });
+
+      if (current.trim()) chunks.push(current.trim());
+      return chunks;
+    }
+
+    function speakNepali(text) {
+      const spokenText = makeNepaliSpeechText(text);
+      const chunks = splitForSpeech(spokenText);
+      const voice = getBestNepaliVoice();
+
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "ne-NP";
-      utterance.rate = 0.92;
-      window.speechSynthesis.speak(utterance);
+
+      if (!chunks.length) {
+        return;
+      }
+
+      chunks.forEach((chunk, index) => {
+        const utterance = new SpeechSynthesisUtterance(chunk);
+        utterance.lang = voice?.lang || "hi-IN";
+        utterance.rate = 0.82;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        if (voice) utterance.voice = voice;
+
+        if (index === 0) {
+          setStatus(voice ? `Speaking with ${voice.name}` : "Speaking with Devanagari voice");
+        }
+        if (index === chunks.length - 1) {
+          utterance.addEventListener("end", () => setStatus("Offline local model ready"));
+        }
+
+        window.speechSynthesis.speak(utterance);
+      });
+    }
+
+    window.speechSynthesis.addEventListener?.("voiceschanged", getBestNepaliVoice);
+
+    speakButton.addEventListener("click", () => {
+      const text = lastAnswer || "पहिले पशु साथीलाई प्रश्न सोध्नुहोस्।";
+      speakNepali(text);
     });
 
     setupVoiceMode();

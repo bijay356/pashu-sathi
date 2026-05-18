@@ -82,7 +82,9 @@ Example query:
 
 The demo page includes a microphone button so farmers can speak their problem. Browser speech recognition support depends on the browser and device. If speech recognition is unavailable, the text mode remains available.
 
-The answer can also be read aloud with the speaker button. This supports farmers who are less comfortable reading long text.
+The answer can also be read aloud with the speaker button. The demo cleans markdown and English medical labels before speaking so playback is smoother for Nepali farmers.
+
+The interface also includes a Stop button to stop both answer generation and voice playback during a live demo.
 
 ## Safety Policy
 
@@ -118,6 +120,7 @@ pashu-sathi/
 `-- demo/
     |-- queries.md
     |-- screenshots/
+    |-- live_chrome_screenshots/
     `-- video/
         `-- README.md
 ```
